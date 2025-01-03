@@ -1,0 +1,59 @@
+/* Dashboard.css */
+
+.dashboard {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .dashboard-header {
+    background-color: #007bff;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-size: 24px;
+  }
+  
+  .dashboard-content {
+    display: flex;
+    flex: 1;
+  }
+  
+  .dashboard-sidebar {
+    width: 25%;
+    background-color: #fff;
+    border-right: 1px solid #ddd;
+    padding: 20px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .dashboard-main {
+    flex: 1;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  h1 {
+    margin: 0;
+  }
+  
+  .dashboard-sidebar,
+  .dashboard-main {
+    overflow-y: auto;
+  }
+  
+  .dashboard-sidebar::-webkit-scrollbar,
+  .dashboard-main::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .dashboard-sidebar::-webkit-scrollbar-thumb,
+  .dashboard-main::-webkit-scrollbar-thumb {
+    background: #007bff;
+    border-radius: 4px;
+  }
+  
