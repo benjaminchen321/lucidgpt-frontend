@@ -1,7 +1,7 @@
 /* App.css */
 
 /* Import Lucid Motors' Official Font */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
 
 /* CSS Variables for Consistent Theming */
 :root {
@@ -17,7 +17,7 @@
   --lucid-disabled: #a9a9a9;
 
   /* Typography */
-  --font-primary: 'Inter', sans-serif;
+  --font-primary: "Inter", sans-serif;
   --font-size-base: 16px;
   --font-size-lg: 1.25rem;
   --font-size-xl: 1.5rem;
@@ -57,7 +57,9 @@ body {
   color: var(--lucid-text);
   font-size: var(--font-size-base);
   line-height: 1.6;
-  transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+  transition:
+    background-color var(--transition-speed) ease,
+    color var(--transition-speed) ease;
 }
 
 /* Dark Mode Styling */
@@ -138,7 +140,7 @@ body.dark-mode .appointment-list ul li:focus {
 .App-header .app-logo {
   height: 40px;
   margin-right: var(--spacing-md);
-  content: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#007bff"/><text x="50%" y="50%" text-anchor="middle" fill="white" font-size="14" font-family="Arial" dy=".3em">Lucid</text></svg>');  
+  content: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#007bff"/><text x="50%" y="50%" text-anchor="middle" fill="white" font-size="14" font-family="Arial" dy=".3em">Lucid</text></svg>');
 }
 
 .App-header h1 {
@@ -197,7 +199,9 @@ nav ul li a:focus {
   padding: var(--spacing-lg);
   border-radius: var(--border-radius-md);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: box-shadow var(--transition-speed) ease, transform var(--transition-speed) ease;
+  transition:
+    box-shadow var(--transition-speed) ease,
+    transform var(--transition-speed) ease;
 }
 
 body.dark-mode .enhanced-assistance {
@@ -229,7 +233,10 @@ body.dark-mode .enhanced-assistance {
   border: 1px solid var(--lucid-border);
   border-radius: var(--border-radius-sm);
   font-size: 1rem;
-  transition: border-color var(--transition-speed) ease, background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+  transition:
+    border-color var(--transition-speed) ease,
+    background-color var(--transition-speed) ease,
+    color var(--transition-speed) ease;
 }
 
 .chat-container input:focus {
@@ -246,7 +253,9 @@ body.dark-mode .enhanced-assistance {
   border-radius: var(--border-radius-sm);
   font-size: 1rem;
   cursor: pointer;
-  transition: background-color var(--transition-speed) ease, transform var(--transition-speed) ease;
+  transition:
+    background-color var(--transition-speed) ease,
+    transform var(--transition-speed) ease;
 }
 
 .chat-container button:disabled {
@@ -266,7 +275,9 @@ body.dark-mode .enhanced-assistance {
   border-left: 4px solid var(--lucid-red);
   border-radius: var(--border-radius-sm);
   animation: fadeIn 0.5s ease-in-out;
-  transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+  transition:
+    background-color var(--transition-speed) ease,
+    border-color var(--transition-speed) ease;
 }
 
 body.dark-mode .response-box {
@@ -346,7 +357,11 @@ body.dark-mode .dashboard-content {
   border-right: 1px solid var(--lucid-border);
   border-radius: var(--border-radius-md);
   box-shadow: 2px 0 4px rgba(0, 0, 0, 0.05);
-  transition: box-shadow var(--transition-speed) ease, transform var(--transition-speed) ease, background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+  transition:
+    box-shadow var(--transition-speed) ease,
+    transform var(--transition-speed) ease,
+    background-color var(--transition-speed) ease,
+    border-color var(--transition-speed) ease;
 }
 
 body.dark-mode .dashboard-sidebar {
@@ -387,7 +402,9 @@ body.dark-mode .dashboard-sidebar {
   padding: var(--spacing-sm);
   border-bottom: 1px solid var(--lucid-border);
   cursor: pointer;
-  transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+  transition:
+    background-color var(--transition-speed) ease,
+    color var(--transition-speed) ease;
 }
 
 .customer-list ul li:hover,
@@ -408,7 +425,11 @@ body.dark-mode .customer-list ul li:focus {
   padding: var(--spacing-lg);
   border-radius: var(--border-radius-md);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: box-shadow var(--transition-speed) ease, transform var(--transition-speed) ease, background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+  transition:
+    box-shadow var(--transition-speed) ease,
+    transform var(--transition-speed) ease,
+    background-color var(--transition-speed) ease,
+    border-color var(--transition-speed) ease;
 }
 
 body.dark-mode .customer-details {
@@ -443,7 +464,11 @@ body.dark-mode .customer-details {
   padding: var(--spacing-lg);
   border-radius: var(--border-radius-md);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: box-shadow var(--transition-speed) ease, transform var(--transition-speed) ease, background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+  transition:
+    box-shadow var(--transition-speed) ease,
+    transform var(--transition-speed) ease,
+    background-color var(--transition-speed) ease,
+    border-color var(--transition-speed) ease;
 }
 
 body.dark-mode .appointment-list {
@@ -470,7 +495,9 @@ body.dark-mode .appointment-list {
 .appointment-list ul li {
   padding: var(--spacing-sm);
   border-bottom: 1px solid var(--lucid-border);
-  transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+  transition:
+    background-color var(--transition-speed) ease,
+    color var(--transition-speed) ease;
 }
 
 .appointment-list ul li:last-child {

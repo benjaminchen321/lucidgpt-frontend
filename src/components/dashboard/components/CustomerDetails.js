@@ -4,33 +4,47 @@ import axios from "axios";
 const CustomerDetails = ({ customerId }) => {
   const [customer, setCustomer] = useState(null);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchCustomerDetails = async () => {
+      if (!customerId) return;
+      setLoading(true);
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_BACKEND_URL}/api/customers/${customerId}`
+          `${process.env.REACT_APP_BACKEND_URL}/customers/${customerId}`,
         );
         setCustomer(response.data);
       } catch (err) {
         console.error("Error fetching customer details:", err);
-        setError("Failed to load customer details.");
+        setError("Failed to load customer details. Please try again later.");
+      } finally {
+        setLoading(false);
       }
     };
 
-    if (customerId) {
-      fetchCustomerDetails();
-    }
+    fetchCustomerDetails();
   }, [customerId]);
 
-  if (!customer) {
+  if (!customerId) {
     return <p>Select a customer to view details.</p>;
+  }
+
+  if (loading) {
+    return <p>Loading customer details...</p>;
+  }
+
+  if (error) {
+    return <p className="error">{error}</p>;
+  }
+
+  if (!customer) {
+    return <p>No customer details available.</p>;
   }
 
   return (
     <div className="customer-details">
       <h2>Customer Details</h2>
-      {error && <p className="error">{error}</p>}
       <p>
         <strong>Name:</strong> {customer.customer.name}
       </p>
@@ -52,7 +66,8 @@ const CustomerDetails = ({ customerId }) => {
       <ul>
         {customer.appointments.map((appointment) => (
           <li key={appointment.date}>
-            {appointment.date} - {appointment.service_type} ({appointment.status})
+            {appointment.date} - {appointment.service_type} (
+            {appointment.status})
           </li>
         ))}
       </ul>

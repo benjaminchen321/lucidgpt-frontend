@@ -49,7 +49,7 @@ const EnhancedAssistance = () => {
         `${process.env.REACT_APP_BACKEND_URL}/client/metadata/search`,
         {
           params: { [metadataType]: query, page: 1 },
-        }
+        },
       );
       setResults(res.data);
       setVisibleResults(res.data.slice(0, initialResultsCount));
@@ -77,7 +77,7 @@ const EnhancedAssistance = () => {
         `${process.env.REACT_APP_BACKEND_URL}/client/metadata/search`,
         {
           params: { [metadataType]: query, page: nextPage },
-        }
+        },
       );
       setResults((prevResults) => {
         const uniqueResults = new Map();
@@ -93,7 +93,7 @@ const EnhancedAssistance = () => {
         });
         return Array.from(newVisibleResults.values()).slice(
           0,
-          prevVisible.length + resultsPerPage
+          prevVisible.length + resultsPerPage,
         );
       });
       setPage(nextPage);
@@ -114,7 +114,11 @@ const EnhancedAssistance = () => {
   const highlightQuery = (text) => {
     const parts = text.split(new RegExp(`(${query})`, "gi"));
     return parts.map((part, index) =>
-      part.toLowerCase() === query.toLowerCase() ? <strong key={index}>{part}</strong> : part
+      part.toLowerCase() === query.toLowerCase() ? (
+        <strong key={index}>{part}</strong>
+      ) : (
+        part
+      ),
     );
   };
 
@@ -134,11 +138,14 @@ const EnhancedAssistance = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting && visibleResults.length < results.length) {
+        if (
+          entries[0].isIntersecting &&
+          visibleResults.length < results.length
+        ) {
           loadMoreData();
         }
       },
-      { threshold: 0.5 } // Trigger loading when halfway visible
+      { threshold: 0.5 }, // Trigger loading when halfway visible
     );
 
     const currentObserverRef = observerRef.current;
@@ -182,18 +189,29 @@ const EnhancedAssistance = () => {
           </button>
         </div>
       )}
-      {loading && <div className="loading-animation">Loading more results...</div>}
+      {loading && (
+        <div className="loading-animation">Loading more results...</div>
+      )}
       <div className="results-container">
         {visibleResults.map((result, index) => (
           <div key={index} className="result-card">
-            <p><strong>Name:</strong> {highlightQuery(result.name)}</p>
+            <p>
+              <strong>Name:</strong> {highlightQuery(result.name)}
+            </p>
             {metadataType === "email" && (
-              <p><strong>Email:</strong> {highlightQuery(result.email)}</p>
+              <p>
+                <strong>Email:</strong> {highlightQuery(result.email)}
+              </p>
             )}
             {metadataType === "phone" && (
-              <p><strong>Phone:</strong> {highlightQuery(result.phone)}</p>
+              <p>
+                <strong>Phone:</strong> {highlightQuery(result.phone)}
+              </p>
             )}
-            <button className="view-details" onClick={() => handleNavigate(result.id)}>
+            <button
+              className="view-details"
+              onClick={() => handleNavigate(result.id)}
+            >
               View Details
             </button>
           </div>
