@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 // EnhancedAssistance.js
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import axios from "axios";
 import "./EnhancedAssistance.css";
 
@@ -36,7 +36,7 @@ const EnhancedAssistance = () => {
     }
   };
 
-  const loadInitialData = async () => {
+  const loadInitialData = useCallback(async () => {
     if (!query.trim()) {
       setResults([]);
       setVisibleResults([]);
@@ -59,9 +59,9 @@ const EnhancedAssistance = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [query, metadataType]);
 
-  const loadMoreData = async () => {
+  const loadMoreData = useCallback(async () => {
     if (isThrottling.current) return; // Prevent rapid loading
 
     isThrottling.current = true;
@@ -87,14 +87,14 @@ const EnhancedAssistance = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [page, metadataType, query, results, visibleResults.length, resultsPerPage]);
 
   useEffect(() => {
     const debounceTimeout = setTimeout(() => {
       loadInitialData();
     }, 300); // Debounce input handling
     return () => clearTimeout(debounceTimeout);
-  }, [query, metadataType]);
+  }, [query, metadataType, loadInitialData]);
 
   const highlightQuery = (text) => {
     const parts = text.split(new RegExp(`(${query})`, "gi"));
@@ -126,16 +126,17 @@ const EnhancedAssistance = () => {
       { threshold: 0.5 } // Trigger loading when halfway visible
     );
 
-    if (observerRef.current) {
-      observer.observe(observerRef.current);
+    const currentObserverRef = observerRef.current;
+    if (currentObserverRef) {
+      observer.observe(currentObserverRef);
     }
 
     return () => {
-      if (observerRef.current) {
-        observer.unobserve(observerRef.current);
+      if (currentObserverRef) {
+        observer.unobserve(currentObserverRef);
       }
     };
-  }, [visibleResults, results]);
+  }, [visibleResults, results, loadMoreData]);
 
   return (
     <div className="enhanced-assistance">
