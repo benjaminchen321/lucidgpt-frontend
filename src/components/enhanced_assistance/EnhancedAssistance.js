@@ -13,11 +13,12 @@ const EnhancedAssistance = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [page, setPage] = useState(1); // Tracks the current page for infinite scrolling
-  const initialResultsCount = 16; // Initial number of results to display
+  const initialResultsCount = 10; // Adjusted initial number of results to display based on typical screen sizes
   const resultsPerPage = 4; // Number of results to load per scroll
   const lastValidQuery = useRef(""); // Tracks the last valid query
   const observerRef = useRef(); // Tracks the intersection observer
   const isThrottling = useRef(false); // Prevents rapid loading of new data
+  const throttleDuration = 600; // Configurable throttle duration in milliseconds
 
   const handleError = (error) => {
     const status = error.response?.status;
@@ -67,7 +68,7 @@ const EnhancedAssistance = () => {
     isThrottling.current = true;
     setTimeout(() => {
       isThrottling.current = false;
-    }, 1000); // 1000ms throttle to slow down loading
+    }, throttleDuration); // Use configurable throttle duration
 
     setLoading(true);
     try {
@@ -78,16 +79,30 @@ const EnhancedAssistance = () => {
           params: { [metadataType]: query, page: nextPage },
         }
       );
-      const updatedResults = [...results, ...res.data];
-      setResults(updatedResults);
-      setVisibleResults(updatedResults.slice(0, visibleResults.length + resultsPerPage));
+      setResults((prevResults) => {
+        const uniqueResults = new Map();
+        [...prevResults, ...res.data].forEach((item) => {
+          uniqueResults.set(item.id, item);
+        });
+        return Array.from(uniqueResults.values());
+      });
+      setVisibleResults((prevVisible) => {
+        const newVisibleResults = new Map();
+        [...prevVisible, ...res.data].forEach((item) => {
+          newVisibleResults.set(item.id, item);
+        });
+        return Array.from(newVisibleResults.values()).slice(
+          0,
+          prevVisible.length + resultsPerPage
+        );
+      });
       setPage(nextPage);
     } catch (error) {
       handleError(error);
     } finally {
       setLoading(false);
     }
-  }, [page, metadataType, query, results, visibleResults.length, resultsPerPage]);
+  }, [page, metadataType, query, resultsPerPage]);
 
   useEffect(() => {
     const debounceTimeout = setTimeout(() => {
