@@ -1,32 +1,35 @@
-// AppointmentList.jsx
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
-const AppointmentList = () => {
-  const appointments = [
-    {
-      id: 1,
-      date: "2025-01-05",
-      time: "10:00 AM",
-      serviceType: "Oil Change",
-      status: "Confirmed",
-    },
-    {
-      id: 2,
-      date: "2025-01-10",
-      time: "2:00 PM",
-      serviceType: "Tire Replacement",
-      status: "Pending",
-    },
-  ];
+const AppointmentList = ({ customerId }) => {
+  const [appointments, setAppointments] = useState([]);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const fetchAppointments = async () => {
+      try {
+        const endpoint = customerId
+          ? `${process.env.REACT_APP_BACKEND_URL}/api/customers/${customerId}`
+          : `${process.env.REACT_APP_BACKEND_URL}/appointments`;
+        const response = await axios.get(endpoint);
+        setAppointments(response.data.appointments || []); // Fallback logic
+      } catch (err) {
+        console.error("Error fetching appointments:", err);
+        setError("Failed to load appointments.");
+      }
+    };
+  
+    fetchAppointments();
+  }, [customerId]);
 
   return (
     <div className="appointment-list">
       <h2>Appointment List</h2>
+      {error && <p className="error">{error}</p>}
       <ul>
         {appointments.map((appointment) => (
-          <li key={appointment.id}>
-            {appointment.date} at {appointment.time}: {appointment.serviceType} (
-            {appointment.status})
+          <li key={appointment.date}>
+            {appointment.date} - {appointment.service_type} ({appointment.status})
           </li>
         ))}
       </ul>
