@@ -49,7 +49,7 @@ const EnhancedAssistance = () => {
         `${process.env.REACT_APP_BACKEND_URL}/client/metadata/search`,
         {
           params: { [metadataType]: query, page: 1 },
-        },
+        }
       );
       setResults(res.data);
       setVisibleResults(res.data.slice(0, initialResultsCount));
@@ -77,7 +77,7 @@ const EnhancedAssistance = () => {
         `${process.env.REACT_APP_BACKEND_URL}/client/metadata/search`,
         {
           params: { [metadataType]: query, page: nextPage },
-        },
+        }
       );
       setResults((prevResults) => {
         const uniqueResults = new Map();
@@ -93,7 +93,7 @@ const EnhancedAssistance = () => {
         });
         return Array.from(newVisibleResults.values()).slice(
           0,
-          prevVisible.length + resultsPerPage,
+          prevVisible.length + resultsPerPage
         );
       });
       setPage(nextPage);
@@ -118,7 +118,7 @@ const EnhancedAssistance = () => {
         <strong key={index}>{part}</strong>
       ) : (
         part
-      ),
+      )
     );
   };
 
@@ -145,7 +145,7 @@ const EnhancedAssistance = () => {
           loadMoreData();
         }
       },
-      { threshold: 0.5 }, // Trigger loading when halfway visible
+      { threshold: 0.5 } // Trigger loading when halfway visible
     );
 
     const currentObserverRef = observerRef.current;
@@ -177,7 +177,7 @@ const EnhancedAssistance = () => {
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder={`Search by ${metadataType}`}
+          placeholder="Type your question here..." // Ensure this matches
           className="search-input"
         />
       </div>

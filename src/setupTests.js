@@ -1,7 +1,17 @@
 import "@testing-library/jest-dom";
-import { TextEncoder, TextDecoder } from "util";
 
-// Add global TextEncoder and TextDecoder for compatibility with Node.js
-global.TextEncoder = TextEncoder;
-global.TextDecoder = TextDecoder;
-require("jest-fetch-mock").enableMocks();
+// Mock IntersectionObserver
+global.IntersectionObserver = class IntersectionObserver {
+  constructor() {}
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+};
+
+// Safely override console.warn to filter specific warnings
+const originalWarn = console.warn;
+global.console.warn = (msg, ...args) => {
+  if (typeof msg === "string" && !msg.includes("React Router Future Flag Warning")) {
+    originalWarn(msg, ...args);
+  }
+};

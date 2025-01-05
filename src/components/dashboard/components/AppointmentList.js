@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "./AppointmentList.css"; // Add this for skeleton loader styles
 
 const AppointmentList = ({ customerId }) => {
   const [appointments, setAppointments] = useState([]);
@@ -29,7 +30,7 @@ const AppointmentList = ({ customerId }) => {
   return (
     <div className="appointment-list">
       <h2>Appointment List</h2>
-      {loading && <p>Loading appointments...</p>}
+      {loading && <div className="skeleton-loader"></div>} {/* Add Skeleton Loader */}
       {error && <p className="error">{error}</p>}
       <ul>
         {appointments.map((appointment) => (

@@ -1,29 +1,10 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
+import useFetch from "../../hooks/useFetch";
 
 const CustomerList = ({ onSelectCustomer }) => {
-  const [customers, setCustomers] = useState([]);
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    const fetchCustomers = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_BACKEND_URL}/customers`,
-        );
-        setCustomers(response.data);
-      } catch (err) {
-        console.error("Error fetching customers:", err);
-        setError("Failed to load customers. Please try again later.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCustomers();
-  }, []);
+  const { data: customers, loading, error } = useFetch(
+    `${process.env.REACT_APP_BACKEND_URL}/customers`
+  );
 
   return (
     <div className="customer-list">

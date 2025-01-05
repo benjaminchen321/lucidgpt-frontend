@@ -1,7 +1,10 @@
 module.exports = {
-  setupFiles: ["<rootDir>/jest.setup.js"], // Load `jest.setup.js` for global mocks
-  testEnvironment: "jsdom",
+  setupFilesAfterEnv: ["<rootDir>/src/setupTests.js"], // Ensure Jest loads setupTests.js
+  testEnvironment: "jsdom", // Use jsdom for DOM testing
+  transform: {
+    "^.+\\.(js|jsx)$": "babel-jest", // Use babel-jest for JavaScript/JSX transformation
+  },
   transformIgnorePatterns: [
-    "node_modules/(?!(msw)/)", // Ensure msw is correctly transformed by Jest
+    "/node_modules/(?!axios|msw)/", // Transform axios and other ES modules
   ],
 };
