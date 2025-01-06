@@ -1,6 +1,6 @@
 // frontend/src/components/common/ErrorBoundary.js
 
-import React from 'react';
+import React from "react";
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -19,10 +19,18 @@ class ErrorBoundary extends React.Component {
 
   render() {
     if (this.state.hasError) {
-      return <h1>Something went wrong.</h1>;
+      return (
+        <div className="error-boundary p-6 max-w-lg mx-auto bg-red-100 text-red-800 border border-red-300 rounded shadow">
+          <h1 className="text-xl font-bold">Something went wrong.</h1>
+          <p className="text-sm text-red-700">
+            Please try refreshing the page or contact support if the issue
+            persists.
+          </p>
+        </div>
+      );
     }
 
-    return this.props.children; 
+    return this.props.children;
   }
 }
 

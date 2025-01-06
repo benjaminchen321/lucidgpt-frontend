@@ -1,4 +1,4 @@
-/* frontend/src/components/Unauthorized.css */
+/* frontend/src/components/Unauthorized.css
 
 .unauthorized-container {
   max-width: 600px;
@@ -47,4 +47,4 @@
 .unauthorized-container a:hover {
   background-color: darken(var(--color-red), 10%);
   transform: scale(1.05);
-}
+} */

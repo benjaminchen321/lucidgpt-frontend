@@ -1,4 +1,4 @@
-/* frontend/src/components/Navbar.css */
+/* frontend/src/components/Navbar.css
 
 .navbar {
   background-color: #007bff;
@@ -6,13 +6,13 @@
 }
 
 .navbar-container {
-  width: 100%; /* Full width */
-  max-width: 1200px; /* Optional: Set a max width */
+  width: 100%;
+  max-width: 1200px; 
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px; /* Optional: Horizontal padding */
+  padding: 0 20px; 
 }
 
 .navbar-brand {
@@ -77,4 +77,4 @@
     width: 100%;
     padding: 10px 0;
   }
-}
+} */

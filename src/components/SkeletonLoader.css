@@ -1,4 +1,4 @@
-/* frontend/src/components/SkeletonLoader.css */
+/* frontend/src/components/SkeletonLoader.css
 
 .skeleton-loader {
     height: 200px;
@@ -18,7 +18,7 @@
     }
   }
   
-  /* Enhanced Skeleton for Multiple Elements */
+
   .skeleton-card {
     display: flex;
     gap: var(--spacing-md);
@@ -61,4 +61,4 @@
       animation: none;
     }
   }
-  
+   */

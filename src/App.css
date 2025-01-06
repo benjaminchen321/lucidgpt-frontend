@@ -1,8 +1,10 @@
 /* App.css */
-
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 /* Global Styles */
 
-body {
+/* body {
   margin: 0;
   padding: 0;
   font-family: 'Helvetica Neue', Arial, sans-serif;
@@ -13,13 +15,11 @@ body {
   align-items: center;
 }
 
-/* Ensure that the root div takes full height */
 #root {
   width: 100%;
   height: 100%;
 }
 
-/* Utility Classes (Optional) */
 .text-center {
   text-align: center;
 }
@@ -28,12 +28,9 @@ body {
   display: none;
 }
 
-/* Import Lucid Motors' Official Font */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
 
-/* CSS Variables for Consistent Theming */
 :root {
-  /* Color Palette */
   --lucid-black: #000000;
   --lucid-white: #ffffff;
   --lucid-red: #d32f2f;
@@ -44,27 +41,22 @@ body {
   --lucid-hover: #b71c1c;
   --lucid-disabled: #a9a9a9;
 
-  /* Typography */
   --font-primary: "Inter", sans-serif;
   --font-size-base: 16px;
   --font-size-lg: 1.25rem;
   --font-size-xl: 1.5rem;
 
-  /* Spacing */
   --spacing-xs: 4px;
   --spacing-sm: 8px;
   --spacing-md: 16px;
   --spacing-lg: 24px;
   --spacing-xl: 32px;
 
-  /* Border Radius */
   --border-radius-sm: 4px;
   --border-radius-md: 8px;
 
-  /* Transition */
   --transition-speed: 0.3s;
 
-  /* Dark Mode Colors */
   --dark-background: #121212;
   --dark-surface: #1e1e1e;
   --dark-text: #e0e0e0;
@@ -72,7 +64,6 @@ body {
   --dark-red: #f44336;
 }
 
-/* Reset some default styles */
 * {
   margin: 0;
   padding: 0;
@@ -90,7 +81,6 @@ body {
     color var(--transition-speed) ease;
 }
 
-/* Dark Mode Styling */
 body.dark-mode {
   background-color: var(--dark-background);
   color: var(--dark-text);
@@ -150,7 +140,6 @@ body.dark-mode .appointment-list ul li:focus {
   background-color: #333333;
 }
 
-/* Header Styling */
 .App-header {
   background-color: var(--lucid-black);
   color: var(--lucid-white);
@@ -194,7 +183,6 @@ nav ul li a:focus {
   color: var(--lucid-red);
 }
 
-/* Dark Mode Toggle Button */
 .toggle-dark-mode {
   background: none;
   border: none;
@@ -211,15 +199,14 @@ nav ul li a:focus {
   color: var(--lucid-red);
 }
 
-/* Main Content Styling */
 .App-main {
   padding: var(--spacing-xl);
   background-color: var(--lucid-gray);
-  min-height: calc(100vh - 80px); /* Adjust based on header height */
+  min-height: calc(100vh - 80px); 
   transition: background-color var(--transition-speed) ease;
 }
 
-/* Enhanced Assistance Styling */
+/* Enhanced Assistance Styling 
 .enhanced-assistance {
   max-width: 800px;
   margin: 0 auto;
@@ -331,7 +318,7 @@ body.dark-mode .response-box {
   margin-left: var(--spacing-md);
 }
 
-/* Keyframes */
+/* Keyframes 
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -341,7 +328,7 @@ body.dark-mode .response-box {
   }
 }
 
-/* Dashboard Styling */
+/* Dashboard Styling 
 .dashboard {
   display: flex;
   flex-direction: column;
@@ -414,7 +401,7 @@ body.dark-mode .dashboard-sidebar {
   flex: 1;
 }
 
-/* Customer List Styling */
+/* Customer List Styling 
 .customer-list h2 {
   font-size: 1.5rem;
   margin-bottom: var(--spacing-sm);
@@ -447,7 +434,7 @@ body.dark-mode .customer-list ul li:focus {
   color: var(--dark-red);
 }
 
-/* Customer Details Styling */
+/* Customer Details Styling 
 .customer-details {
   background-color: var(--lucid-white);
   padding: var(--spacing-lg);
@@ -486,7 +473,7 @@ body.dark-mode .customer-details {
   font-weight: 600;
 }
 
-/* Appointment List Styling */
+/* Appointment List Styling 
 .appointment-list {
   background-color: var(--lucid-white);
   padding: var(--spacing-lg);
@@ -542,7 +529,7 @@ body.dark-mode .appointment-list ul li:focus {
   background-color: #333333;
 }
 
-/* Iconography */
+/* Iconography 
 .icon {
   width: 20px;
   height: 20px;
@@ -564,7 +551,7 @@ body.dark-mode .icon:focus {
   fill: var(--dark-red);
 }
 
-/* Form Validation Styles */
+/* Form Validation Styles 
 .input-error {
   border-color: var(--lucid-red);
 }
@@ -585,7 +572,7 @@ body.dark-mode .icon:focus {
   margin-top: var(--spacing-xs);
 }
 
-/* Responsive Design Enhancements */
+/* Responsive Design Enhancements 
 @media (max-width: 768px) {
   .App-header {
     flex-direction: column;
@@ -627,7 +614,7 @@ body.dark-mode .icon:focus {
   }
 }
 
-/* Accessibility Enhancements */
+/* Accessibility Enhancements 
 a:focus,
 button:focus,
 input:focus,
@@ -647,4 +634,4 @@ body.dark-mode li:focus {
   * {
     transition: none !important;
   }
-}
+} */

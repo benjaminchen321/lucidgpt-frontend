@@ -1,4 +1,4 @@
-.enhanced-assistance {
+/* .enhanced-assistance {
   max-width: 800px;
   margin: 40px auto;
   padding: 20px;
@@ -88,7 +88,7 @@
 
 .assist-button {
   padding: 12px;
-  background-color: #007bff; /* Lucid's primary color */
+  background-color: #007bff; 
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -141,7 +141,7 @@
   line-height: 1.5;
 }
 
-/* Responsive Adjustments */
+
 @media (max-width: 600px) {
   .enhanced-assistance {
     padding: 15px;
@@ -169,4 +169,4 @@
     font-size: 14px;
     padding: 10px;
   }
-}
+} */

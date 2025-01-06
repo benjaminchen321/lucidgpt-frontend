@@ -1,11 +1,9 @@
-// Updated AppointmentList.js
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "./AppointmentList.css"; // Ensure this file exists for styling
+import PaginatedList from "./PaginatedList";
 
 const AppointmentList = ({ customerId }) => {
   const [appointments, setAppointments] = useState([]);
-  const observerRef = useRef(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -13,10 +11,9 @@ const AppointmentList = ({ customerId }) => {
     const fetchAppointments = async () => {
       setLoading(true);
       try {
-        let endpoint = `${process.env.REACT_APP_BACKEND_URL}/appointments`;
-        if (customerId) {
-          endpoint = `${process.env.REACT_APP_BACKEND_URL}/customers/${customerId}`;
-        }
+        const endpoint = customerId
+          ? `${process.env.REACT_APP_BACKEND_URL}/customers/${customerId}`
+          : `${process.env.REACT_APP_BACKEND_URL}/appointments`;
         const response = await axios.get(endpoint);
         setAppointments(response.data.appointments || response.data || []);
       } catch (err) {
@@ -31,20 +28,36 @@ const AppointmentList = ({ customerId }) => {
   }, [customerId]);
 
   return (
-    <div className="appointment-list">
-      <h2>Appointment List</h2>
-      {loading && <div className="skeleton-loader"></div>}
-      {error && <p className="error">{error}</p>}
-      <ul>
-        {appointments.map((appointment) => (
-          <li key={appointment.id}>
-            {appointment.date} - {appointment.service_type} (
-            {appointment.status})
-          </li>
-        ))}
-      </ul>
-      {loading && <div className="loading-animation">Loading...</div>}
-      <div ref={observerRef} style={{ height: "1px" }}></div>
+    <div className="p-4 bg-white shadow rounded">
+      <h2 className="text-lg font-bold text-blue-600 mb-4">
+        {customerId
+          ? "Upcoming Appointments for Selected Customer"
+          : "Upcoming Appointments"}
+      </h2>
+      <p className="text-gray-600 mb-4">
+        {customerId
+          ? "Here are the upcoming appointments for the selected customer."
+          : "Below is a list of all upcoming appointments."}
+      </p>
+      {loading && <p>Loading...</p>}
+      {error && <p className="text-red-600">{error}</p>}
+      {!loading && !error && (
+        <PaginatedList
+          items={appointments}
+          itemsPerPage={5}
+          renderItem={(appointment) => (
+            <div className="appointment-item p-4 bg-gray-50 shadow-md rounded-lg">
+              <p className="appointment-date text-lg font-medium text-gray-800">
+                {new Date(appointment.date).toLocaleDateString()} -{" "}
+                {appointment.service_type}
+              </p>
+              <p className="appointment-status text-sm text-gray-500">
+                Status: {appointment.status}
+              </p>
+            </div>
+          )}
+        />
+      )}
     </div>
   );
 };

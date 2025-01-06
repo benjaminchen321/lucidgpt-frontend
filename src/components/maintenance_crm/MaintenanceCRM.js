@@ -75,39 +75,34 @@ const MaintenanceCRM = () => {
   }, [visibleResults, results, loadMoreData]);
 
   return (
-    <div className="maintenance-crm">
-      <h1>Customer CRM</h1>
+    <div className="container mx-auto mt-6 p-6 bg-white shadow-lg rounded-lg">
+      <h1 className="text-2xl font-bold text-blue-600 mb-4">Customer CRM</h1>
       {error && (
-        <div className="error-message">
+        <div className="p-4 bg-red-100 text-red-700 rounded mb-4">
           <p>{error}</p>
-          <button onClick={loadCustomers} className="retry-button">
+          <button
+            onClick={loadCustomers}
+            className="mt-2 px-4 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700"
+          >
             Retry
           </button>
         </div>
       )}
-      {loading && <div className="loading-animation">Loading...</div>}
-      <div className="results-container">
+      {loading && <p className="text-gray-600">Loading...</p>}
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {visibleResults.map((customer) => (
-          <div key={customer.id} className="result-card">
-            <p>
-              <strong>Name:</strong> {customer.name}
-            </p>
-            <p>
-              <strong>Email:</strong> {customer.email}
-            </p>
-            <p>
-              <strong>Phone:</strong> {customer.phone}
-            </p>
-            <button
-              className="view-details"
-              onClick={() => navigate(`/dashboard/${customer.id}`)}
-            >
-              View Details
-            </button>
+          <div
+            key={customer.id}
+            className="p-4 bg-gray-50 shadow-md rounded-lg hover:shadow-lg transition-all duration-200 cursor-pointer"
+            onClick={() => navigate(`/dashboard/${customer.id}`)}
+          >
+            <h2 className="text-lg font-semibold text-gray-800">{customer.name}</h2>
+            <p className="text-sm text-gray-500">{customer.email}</p>
+            <p className="text-sm text-gray-500">{customer.phone}</p>
           </div>
         ))}
-        <div ref={observerRef} style={{ height: "1px" }}></div>
       </div>
+      <div ref={observerRef} style={{ height: "1px" }}></div>
     </div>
   );
 };
