@@ -1,5 +1,6 @@
+// frontend/src/setupTests.js
+
 import "@testing-library/jest-dom";
-import '@testing-library/jest-dom/extend-expect';
 
 // Mock IntersectionObserver
 global.IntersectionObserver = class IntersectionObserver {

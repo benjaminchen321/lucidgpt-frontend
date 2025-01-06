@@ -1,9 +1,9 @@
-// src/utils/axiosConfig.js
+// frontend/src/utils/axiosConfig.js
 
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_BACKEND_URL, // Ensure this is set correctly
+  baseURL: process.env.REACT_APP_BACKEND_URL,
 });
 
 // Add a request interceptor to include the token
