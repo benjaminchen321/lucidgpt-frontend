@@ -75,9 +75,9 @@ const MaintenanceCRM = () => {
   }, [visibleResults, results, loadMoreData]);
 
   return (
-    <div className="container mx-auto mt-6 p-6 bg-white shadow-lg rounded-lg" style={{marginTop: "13vh"}}>
-      <h1 className="text-2xl font-bold text-blue-600 mb-4">Customer CRM</h1>
-      <p className="text-sm text-gray-600 mb-4">
+    <div className="max-w-screen-lg mx-auto mt-20 p-6 bg-white shadow rounded-lg" style={{marginTop: "13vh"}}>
+      <h1 className="text-3xl font-bold text-[#a47b5b] mb-6">Maintenance Hub</h1>
+      <p className="text-gray-700">
         Browse the list of customers to view their contact details and navigate to their
         full profile for additional insights, including appointments and vehicle information.
       </p>

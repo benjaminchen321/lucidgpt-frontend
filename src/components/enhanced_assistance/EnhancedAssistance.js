@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import axios from "../../utils/axiosConfig";
-import ReactMarkdown from "react-markdown"; // Import ReactMarkdown for Markdown rendering
+import ReactMarkdown from "react-markdown";
 import LoadingSpinner from "../common/LoadingSpinner";
-import "./EnhancedAssistance.css";
 
 const EnhancedAssistance = () => {
   const [query, setQuery] = useState("");
@@ -42,32 +41,24 @@ const EnhancedAssistance = () => {
   };
 
   return (
-    <div className="enhanced-assistance max-w-4xl mx-auto bg-white p-6 shadow-lg rounded-lg" style={{marginTop: "13vh"}}>
-      <h2 className="text-2xl font-semibold text-blue-600 mb-4">
-        LucidGPT
-      </h2>
-      <p className="mb-4 text-gray-600">
-        Hi, I'm LucidGPT! You can ask questions about
-        your vehicle, maintenance schedules, or other queries related to Lucid
-        Motors. Examples of queries:
+    <div className="max-w-screen-lg mx-auto mt-20 p-8 bg-white shadow-lg rounded-lg">
+      <h2 className="text-3xl font-bold text-[#a47b5b] mb-6">LucidGPT Assistance</h2>
+      <p className="text-gray-700 mb-4">
+        Welcome to LucidGPT! Ask any questions about Lucid Motors, including vehicles, maintenance, and more. Examples:
       </p>
-      <ul className="instruction-list list-disc list-inside text-gray-800 mb-6">
-        <li className="mb-2">What are the features of the latest Lucid vehicle models?</li>
-        <li className="mb-2">How does Lucid compare with other electric car manufacturers?</li>
-        <li className="mb-2">What are the benefits of Lucid's battery technology?</li>
-        <li className="mb-2">Where can I find a Lucid service center near me?</li>
+      <ul className="list-disc list-inside text-gray-800 mb-6">
+        <li>What are the features of the latest Lucid vehicles?</li>
+        <li>Where can I find a Lucid service center near me?</li>
+        <li>What are the benefits of Lucid's battery technology?</li>
       </ul>
-      <div className="conversation space-y-4 mb-6">
+      <div className="space-y-4 mb-6">
         {conversation.map((entry, index) => (
-          <div
-            key={index}
-            className="conversation-entry p-4 bg-gray-50 shadow rounded-lg"
-          >
-            <div className="user-query mb-2">
-              <strong className="text-blue-600">You:</strong> {entry.query}
+          <div key={index} className="p-4 bg-gray-50 shadow rounded-lg">
+            <div className="mb-2">
+              <strong className="text-[#a47b5b]">You:</strong> {entry.query}
             </div>
-            <div className="ai-response">
-              <strong className="text-blue-600">LucidGPT:</strong>
+            <div>
+              <strong className="text-[#a47b5b]">LucidGPT:</strong>
               <ReactMarkdown className="markdown mt-2 text-gray-800">
                 {entry.answer}
               </ReactMarkdown>
@@ -75,32 +66,32 @@ const EnhancedAssistance = () => {
           </div>
         ))}
         {loading && (
-          <div className="conversation-entry p-4 bg-gray-50 shadow rounded-lg">
-            <div className="ai-response">
-              <strong className="text-blue-600">LucidGPT:</strong> <LoadingSpinner />
+          <div className="p-4 bg-gray-50 shadow rounded-lg">
+            <div>
+              <strong className="text-[#a47b5b]">LucidGPT:</strong> <LoadingSpinner />
             </div>
           </div>
         )}
       </div>
-      <form onSubmit={handleAssist} className="assist-form space-y-4">
+      <form onSubmit={handleAssist} className="space-y-4">
         <textarea
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Ask your question related to Lucid Motor..."
+          placeholder="Ask your question related to Lucid Motors..."
           required
           rows="3"
-          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#a47b5b] focus:border-[#a47b5b]"
         ></textarea>
         <button
           type="submit"
-          className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1"
+          className="w-full py-3 px-4 bg-[#a47b5b] text-white font-semibold rounded-lg shadow hover:bg-[#7b5b42] focus:outline-none focus:ring-2 focus:ring-[#a47b5b] focus:ring-offset-1"
           disabled={loading}
         >
           {loading ? <LoadingSpinner /> : "Send"}
         </button>
       </form>
       {error && (
-        <div className="error-message mt-4 p-3 bg-red-100 text-red-700 border border-red-300 rounded">
+        <div className="mt-4 p-3 bg-red-100 text-red-700 border border-red-300 rounded">
           {error}
         </div>
       )}
