@@ -52,9 +52,10 @@ const EnhancedAssistance = () => {
         Motors. Examples of queries:
       </p>
       <ul className="instruction-list">
-        <li>When is my next maintenance appointment?</li>
-        <li>What services are available for my car?</li>
-        <li>How can I update my contact information?</li>
+        <li>What are the features of the latest Lucid vehicle models?</li>
+        <li>How does Lucid compare with other electric car manufacturers?</li>
+        <li>What are the benefits of Lucid's battery technology?</li>
+        <li>Where can I find a Lucid service center near me?</li>
       </ul>
       <div className="conversation">
         {conversation.map((entry, index) => (

@@ -8,7 +8,7 @@ const Navbar = () => {
       <div className="navbar-container">
         {/* Navbar Title */}
         <Link to="/" className="navbar-brand">
-          LucidCRM
+          LucidGPT
         </Link>
 
         {/* Navigation Links */}
