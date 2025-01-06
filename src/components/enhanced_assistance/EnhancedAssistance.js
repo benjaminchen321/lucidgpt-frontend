@@ -42,7 +42,7 @@ const EnhancedAssistance = () => {
   };
 
   return (
-    <div className="enhanced-assistance max-w-4xl mx-auto bg-white p-6 shadow-lg rounded-lg">
+    <div className="enhanced-assistance max-w-4xl mx-auto bg-white p-6 shadow-lg rounded-lg" style={{marginTop: "20vh"}}>
       <h2 className="text-2xl font-semibold text-blue-600 mb-4">
         LucidGPT Enhanced Assistance
       </h2>

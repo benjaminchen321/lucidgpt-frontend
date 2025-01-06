@@ -75,7 +75,7 @@ const MaintenanceCRM = () => {
   }, [visibleResults, results, loadMoreData]);
 
   return (
-    <div className="container mx-auto mt-6 p-6 bg-white shadow-lg rounded-lg">
+    <div className="container mx-auto mt-6 p-6 bg-white shadow-lg rounded-lg" style={{marginTop: "20vh"}}>
       <h1 className="text-2xl font-bold text-blue-600 mb-4">Customer CRM</h1>
       {error && (
         <div className="p-4 bg-red-100 text-red-700 rounded mb-4">
