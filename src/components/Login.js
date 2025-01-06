@@ -1,9 +1,11 @@
-// src/components/Login.js
+// frontend/src/components/Login.js
 
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import axios from '../utils/axiosConfig';
 import { useNavigate } from 'react-router-dom';
+import './Login.css'; // Import the updated CSS
+import LoadingSpinner from './common/LoadingSpinner'; // Import LoadingSpinner
 
 const Login = () => {
   const { login } = useContext(AuthContext);
@@ -14,6 +16,7 @@ const Login = () => {
     password: '',
   });
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false); // State for loading
 
   const handleChange = (e) => {
     setForm((prev) => ({
@@ -25,9 +28,10 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setLoading(true); // Start loading
     try {
       const params = new URLSearchParams();
-      params.append('username', form.email);
+      params.append('username', form.email); // Ensure backend expects 'username'
       params.append('password', form.password);
       // 'grant_type' defaults to 'password', no need to set it explicitly
 
@@ -36,42 +40,64 @@ const Login = () => {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
       });
-      login(response.data.access_token);
-      navigate('/dashboard');
+
+      console.log('Token Response:', response.data); // Debugging line
+
+      if (response.data.access_token) {
+        login(response.data.access_token);
+        navigate('/dashboard');
+      } else {
+        setError('Invalid response from server. Please try again.');
+      }
     } catch (err) {
+      console.error('Login Error:', err); // Debugging line
       if (err.response && err.response.data.detail) {
         setError(err.response.data.detail);
       } else {
         setError('An error occurred during login.');
       }
+    } finally {
+      setLoading(false); // End loading
     }
   };
 
   return (
     <div className="login-container">
-      <h2>Login</h2>
-      {error && <div className="error-message">{error}</div>}
-      <form onSubmit={handleSubmit}>
-        <label>Email:</label>
-        <input
-          type="email"
-          name="email"
-          value={form.email}
-          onChange={handleChange}
-          required
-        />
-        
-        <label>Password:</label>
-        <input
-          type="password"
-          name="password"
-          value={form.password}
-          onChange={handleChange}
-          required
-        />
-        
-        <button type="submit">Login</button>
-      </form>
+      <div className="login-box">
+        <h2>Welcome Back</h2>
+        {error && <div className="error-message">{error}</div>}
+        <form onSubmit={handleSubmit}>
+          <div className="input-group">
+            <label htmlFor="email">Email:</label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              value={form.email}
+              onChange={handleChange}
+              required
+              placeholder="Enter your email"
+            />
+          </div>
+          
+          <div className="input-group">
+            <label htmlFor="password">Password:</label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              value={form.password}
+              onChange={handleChange}
+              required
+              placeholder="Enter your password"
+            />
+          </div>
+          
+          <button type="submit" className="login-button" disabled={loading}>
+            {loading ? <LoadingSpinner /> : "Login"}
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

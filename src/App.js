@@ -1,75 +1,38 @@
-// src/App.js
+// frontend/src/App.js
 
-import React, { useContext } from "react";
-import { BrowserRouter as Router, Routes, Route, Link, Navigate } from "react-router-dom";
-import { AuthProvider, AuthContext } from "./context/AuthContext"; // Import AuthContext
-import PrivateRoute from "./components/common/PrivateRoute"; // Import PrivateRoute
-import EnhancedAssistance from "./components/enhanced_assistance/EnhancedAssistance";
-import Dashboard from "./components/dashboard/Dashboard";
-import ErrorBoundary from "./components/common/ErrorBoundary";
-import Login from "./components/Login"; // Import Login component
-import DarkModeToggle from "./components/DarkModeToggle"; // Import DarkModeToggle
-import Logout from "./components/Logout"; // Import Logout component
-import "./App.css";
+import React, { Suspense, lazy } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import PrivateRoute from './components/common/PrivateRoute';
+import LoadingSpinner from './components/common/LoadingSpinner'; // Import LoadingSpinner
+import Navbar from './components/Navbar'; // Ensure Navbar is correctly implemented
 
-const AppContent = () => {
-  const { auth } = useContext(AuthContext); // Access auth state
+// Lazy-loaded components
+const Login = lazy(() => import('./components/Login'));
+const Dashboard = lazy(() => import('./components/dashboard/Dashboard'));
+const EnhancedAssistance = lazy(() => import('./components/enhanced_assistance/EnhancedAssistance')); // New AI Assistance component
+const MaintenanceCRM = lazy(() => import('./components/maintenance_crm/MaintenanceCRM')); // Renamed MaintenanceCRM component
 
+function App() {
   return (
-    <Router>
-      <header className="App-header">
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 100 100"
-            className="app-logo"
-          >
-            <rect width="100" height="100" fill="#007bff" />
-            <text
-              x="50%"
-              y="50%"
-              textAnchor="middle"
-              fill="white"
-              fontSize="14"
-              fontFamily="Arial"
-              dy=".3em"
-            >
-              Lucid
-            </text>
-          </svg>
-          <h1>LucidGPT</h1>
-        </div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/enhanced-assistance">Enhanced Assistance</Link>
-            </li>
-            {auth.isAuthenticated ? (
-              <>
-                <li>
-                  <Link to="/dashboard">Customer Dashboard</Link>
-                </li>
-                <li>
-                  <Link to="/assist">Assistance</Link>
-                </li>
-                <li>
-                  <Logout />
-                </li>
-              </>
-            ) : (
-              <li>
-                <Link to="/login">Login</Link>
-              </li>
-            )}
-          </ul>
-        </nav>
-        <DarkModeToggle /> {/* Add Dark Mode Toggle */}
-      </header>
-      <main className="App-main">
-        <ErrorBoundary>
+    <AuthProvider>
+      <Router>
+        <Suspense fallback={<LoadingSpinner />}> {/* Use LoadingSpinner as fallback */}
+          <Navbar /> {/* Add Navbar here for consistent navigation */}
           <Routes>
+            <Route path="/login" element={<Login />} />
+            
+            {/* Protected Routes */}
             <Route
-              path="/enhanced-assistance"
+              path="/dashboard/*" // Adjust if Dashboard has nested routes
+              element={
+                <PrivateRoute>
+                  <Dashboard />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/assist"
               element={
                 <PrivateRoute>
                   <EnhancedAssistance />
@@ -77,28 +40,21 @@ const AppContent = () => {
               }
             />
             <Route
-              path="/dashboard"
+              path="/crm"
               element={
                 <PrivateRoute>
-                  <Dashboard />
+                  <MaintenanceCRM />
                 </PrivateRoute>
               }
             />
-            <Route path="/login" element={<Login />} />
-            {/* Add other routes as needed */}
-            {/* Redirect unknown routes to a default page */}
-            <Route path="*" element={<Navigate to="/enhanced-assistance" replace />} />
+            
+            {/* Fallback Route */}
+            <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Routes>
-        </ErrorBoundary>
-      </main>
-    </Router>
+        </Suspense>
+      </Router>
+    </AuthProvider>
   );
-};
-
-const App = () => (
-  <AuthProvider>
-    <AppContent />
-  </AuthProvider>
-);
+}
 
 export default App;

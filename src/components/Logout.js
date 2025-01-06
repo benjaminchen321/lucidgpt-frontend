@@ -1,8 +1,9 @@
-// src/components/Logout.js
+// frontend/src/components/Logout.js
 
 import React, { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import './Logout.css'; // Create and style if necessary
 
 const Logout = () => {
   const { logout } = useContext(AuthContext);
@@ -10,11 +11,11 @@ const Logout = () => {
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    // navigate('/login'); // Already handled in AuthContext's logout function
   };
 
   return (
-    <button onClick={handleLogout} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'blue', textDecoration: 'underline' }}>
+    <button onClick={handleLogout} className="logout-button">
       Logout
     </button>
   );
