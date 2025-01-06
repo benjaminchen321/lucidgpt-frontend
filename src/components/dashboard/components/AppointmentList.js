@@ -29,16 +29,6 @@ const AppointmentList = ({ customerId }) => {
 
   return (
     <div className="p-4 bg-white shadow rounded">
-      <h2 className="text-lg font-bold text-blue-600 mb-4">
-        {customerId
-          ? "Upcoming Appointments for Selected Customer"
-          : "Upcoming Appointments"}
-      </h2>
-      <p className="text-gray-600 mb-4">
-        {customerId
-          ? "Here are the upcoming appointments for the selected customer."
-          : "Below is a list of all upcoming appointments."}
-      </p>
       {loading && <p>Loading...</p>}
       {error && <p className="text-red-600">{error}</p>}
       {!loading && !error && (

@@ -9,7 +9,6 @@ const CustomerList = ({ onSelectCustomer }) => {
 
   return (
     <div className="customer-list p-4 bg-white shadow rounded">
-      <h2 className="text-lg font-bold text-blue-600 mb-4">Customer List</h2>
       {loading && <p>Loading customers...</p>}
       {error && <p className="error text-red-600">{error}</p>}
       {!loading && !error && (

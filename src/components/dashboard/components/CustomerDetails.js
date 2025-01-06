@@ -29,11 +29,7 @@ const CustomerDetails = () => {
   }, [customer_id]);
 
   if (!customer_id) {
-    return (
-      <p className="text-gray-500 italic text-center mt-4">
-        Select a customer to view details.
-      </p>
-    );
+    return null;
   }
 
   if (loading) {
