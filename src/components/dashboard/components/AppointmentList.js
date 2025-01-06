@@ -1,4 +1,4 @@
-// frontend/src/components/dashboard/components/AppointmentList.js
+// Updated AppointmentList.js
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import "./AppointmentList.css"; // Ensure this file exists for styling
@@ -17,11 +17,7 @@ const AppointmentList = ({ customerId }) => {
         if (customerId) {
           endpoint = `${process.env.REACT_APP_BACKEND_URL}/customers/${customerId}`;
         }
-        const response = await axios.get(endpoint, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`, // Ensure token is stored upon login
-          },
-        });
+        const response = await axios.get(endpoint);
         setAppointments(response.data.appointments || response.data || []);
       } catch (err) {
         console.error("Error fetching appointments:", err);

@@ -1,4 +1,4 @@
-// frontend/src/components/dashboard/components/CustomerDetails.js
+// Updated CustomerDetails.js
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -13,12 +13,7 @@ const CustomerDetails = ({ customerId }) => {
       setLoading(true);
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_BACKEND_URL}/customers/${customerId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`, // Ensure token is stored upon login
-            },
-          }
+          `${process.env.REACT_APP_BACKEND_URL}/customers/${customerId}`
         );
         setCustomer(response.data);
       } catch (err) {

@@ -1,14 +1,13 @@
-/* frontend/src/components/enhanced_assistance/EnhancedAssistance.css */
-
 .enhanced-assistance {
   max-width: 800px;
   margin: 40px auto;
   padding: 20px;
   background-color: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
+  font-family: 'Arial', sans-serif;
 }
 
 .enhanced-assistance h2 {
@@ -16,6 +15,27 @@
   color: #007bff;
   margin-bottom: 20px;
   font-size: 2em;
+  font-weight: bold;
+}
+
+.enhanced-assistance p {
+  text-align: center;
+  color: #555;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.instruction-list {
+  margin: 10px 0 20px;
+  padding: 0;
+  list-style-type: disc;
+  list-style-position: inside;
+  color: #007bff;
+}
+
+.instruction-list li {
+  margin-bottom: 8px;
+  font-size: 16px;
 }
 
 .conversation {
@@ -23,7 +43,8 @@
   max-height: 400px;
   overflow-y: auto;
   margin-bottom: 20px;
-  padding: 10px;
+  padding: 15px;
+  background-color: #f8f9fa;
   border: 1px solid #ccc;
   border-radius: 8px;
 }
@@ -34,10 +55,12 @@
 
 .user-query, .ai-response {
   margin-bottom: 5px;
+  line-height: 1.5;
 }
 
 .user-query strong, .ai-response strong {
   color: #007bff;
+  font-weight: bold;
 }
 
 .assist-form {
@@ -53,6 +76,7 @@
   border-radius: 8px;
   resize: vertical;
   font-size: 16px;
+  font-family: inherit;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -63,14 +87,16 @@
 }
 
 .assist-button {
-  padding: 10px;
+  padding: 12px;
   background-color: #007bff; /* Lucid's primary color */
   color: #fff;
   border: none;
   border-radius: 8px;
   font-size: 16px;
+  font-family: inherit;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .assist-button:disabled {
@@ -80,6 +106,7 @@
 
 .assist-button:hover:not(:disabled) {
   background-color: #0056b3;
+  transform: scale(1.02);
 }
 
 .error-message {
@@ -90,6 +117,7 @@
   border-radius: 8px;
   text-align: center;
   margin-top: 10px;
+  font-weight: bold;
 }
 
 .assist-answer {
@@ -98,30 +126,47 @@
   border-left: 4px solid #007bff;
   background-color: #f8f9fa;
   border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .assist-answer h3 {
   margin-bottom: 10px;
   color: #333;
+  font-size: 18px;
 }
 
 .assist-answer p {
   font-size: 16px;
   color: #555;
+  line-height: 1.5;
 }
 
 /* Responsive Adjustments */
 @media (max-width: 600px) {
+  .enhanced-assistance {
+    padding: 15px;
+  }
+
   .conversation {
     max-height: 300px;
+    padding: 10px;
   }
-  
+
   .enhanced-assistance h2 {
     font-size: 1.5em;
   }
-  
+
+  .instruction-list {
+    font-size: 14px;
+  }
+
+  .assist-form textarea {
+    padding: 10px;
+    font-size: 14px;
+  }
+
   .assist-button {
     font-size: 14px;
-    padding: 8px;
+    padding: 10px;
   }
 }

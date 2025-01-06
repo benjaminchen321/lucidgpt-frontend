@@ -1,5 +1,3 @@
-// frontend/src/components/enhanced_assistance/EnhancedAssistance.js
-
 import React, { useState } from "react";
 import axios from "../../utils/axiosConfig";
 import LoadingSpinner from "../common/LoadingSpinner"; // Import LoadingSpinner
@@ -21,11 +19,14 @@ const EnhancedAssistance = () => {
     setError("");
 
     try {
-      const response = await axios.post("/assist", { query });
+      console.log("query:", { query: query });
+      console.log("Payload:", { query: query.trim() });
+      
+      const response = await axios.post("/assist", { query: query.trim() });
       if (response.data && response.data.answer) {
-        setConversation(prev => [
+        setConversation((prev) => [
           ...prev,
-          { query, answer: response.data.answer }
+          { query, answer: response.data.answer },
         ]);
         setQuery("");
       } else {
@@ -35,7 +36,7 @@ const EnhancedAssistance = () => {
       if (err.response && err.response.data.detail) {
         setError(err.response.data.detail);
       } else {
-        setError("An error occurred while fetching assistance.");
+      setError("An error occurred while fetching assistance.");
       }
     } finally {
       setLoading(false);
@@ -45,6 +46,16 @@ const EnhancedAssistance = () => {
   return (
     <div className="enhanced-assistance">
       <h2>LucidGPT Enhanced Assistance</h2>
+      <p>
+        Welcome to LucidGPT Enhanced Assistance! You can ask questions about
+        your vehicle, maintenance schedules, or other queries related to Lucid
+        Motors. Examples of queries:
+      </p>
+      <ul className="instruction-list">
+        <li>When is my next maintenance appointment?</li>
+        <li>What services are available for my car?</li>
+        <li>How can I update my contact information?</li>
+      </ul>
       <div className="conversation">
         {conversation.map((entry, index) => (
           <div key={index} className="conversation-entry">
