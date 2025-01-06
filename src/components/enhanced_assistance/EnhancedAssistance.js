@@ -177,7 +177,7 @@ const EnhancedAssistance = () => {
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Type your question here..." // Ensure this matches
+          placeholder="Type your question here..."
           className="search-input"
         />
       </div>
@@ -190,11 +190,11 @@ const EnhancedAssistance = () => {
         </div>
       )}
       {loading && (
-        <div className="loading-animation">Loading more results...</div>
+        <div className="loading-animation">Loading...</div>
       )}
       <div className="results-container">
-        {visibleResults.map((result, index) => (
-          <div key={index} className="result-card">
+        {visibleResults.map((result) => (
+          <div key={result.id} className="result-card">
             <p>
               <strong>Name:</strong> {highlightQuery(result.name)}
             </p>
@@ -216,7 +216,9 @@ const EnhancedAssistance = () => {
             </button>
           </div>
         ))}
-        {loading && <div className="loading-animation">Loading...</div>}
+        {visibleResults.length > 0 && visibleResults.length < results.length && loading && (
+          <div className="loading-animation">Loading more results...</div>
+        )}
         <div ref={observerRef} style={{ height: "1px" }}></div>
       </div>
     </div>

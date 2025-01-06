@@ -1,44 +1,29 @@
+// frontend/src/components/common/ErrorBoundary.js
 import React from "react";
-import "./ErrorBoundary.css";
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { hasError: false, error: null, errorInfo: null };
+    this.state = { hasError: false };
   }
 
   static getDerivedStateFromError(error) {
-    return { hasError: true, error };
+    // Update state to display fallback UI on next render
+    return { hasError: true };
   }
 
   componentDidCatch(error, errorInfo) {
-    console.error("Error caught by ErrorBoundary:", error, errorInfo);
-    this.setState({ errorInfo });
+    // You can log the error to an error reporting service here
+    console.error("ErrorBoundary caught an error", error, errorInfo);
   }
-
-  handleRetry = () => {
-    this.setState({ hasError: false, error: null, errorInfo: null });
-  };
 
   render() {
     if (this.state.hasError) {
-      return (
-        <div className="error-boundary">
-          <h2>Something went wrong.</h2>
-          <p>{this.state.error?.message || "An unexpected error occurred."}</p>
-          {this.state.errorInfo && (
-            <details style={{ whiteSpace: "pre-wrap" }}>
-              {this.state.errorInfo.componentStack}
-            </details>
-          )}
-          <button onClick={this.handleRetry} className="retry-button">
-            Retry
-          </button>
-        </div>
-      );
+      // Fallback UI
+      return <h1>Something went wrong.</h1>;
     }
 
-    return this.props.children;
+    return this.props.children; 
   }
 }
 

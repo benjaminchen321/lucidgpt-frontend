@@ -1,3 +1,4 @@
+// frontend/src/components/dashboard/components/CustomerList.js
 import React from "react";
 import useFetch from "../../hooks/useFetch";
 
