@@ -18,8 +18,8 @@ const CustomerList = ({ onSelectCustomer }) => {
           itemsPerPage={5}
           renderItem={(customer) => (
             <div
-              onClick={() => onSelectCustomer(customer.id)}
-              className="p-4 bg-gray-50 shadow-md rounded-lg cursor-pointer hover:shadow-lg hover:bg-gray-100 transition-all duration-200 flex flex-col sm:flex-row justify-between items-start sm:items-center"
+            onClick={() => onSelectCustomer(customer.id)}
+            className="p-4 bg-gray-50 shadow-md rounded-lg cursor-pointer hover:shadow-lg hover:bg-gray-100 transition-all duration-200 flex flex-col sm:flex-row justify-between items-start sm:items-center"
             >
               <p className="text-lg font-medium text-gray-800 truncate w-full sm:w-auto sm:mr-4">
                 {customer.name}

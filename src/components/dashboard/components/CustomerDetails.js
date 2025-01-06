@@ -1,19 +1,20 @@
 // Updated CustomerDetails.js
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 
-const CustomerDetails = ({ customerId }) => {
+const CustomerDetails = () => {
+  const { customer_id } = useParams(); // Get the customer ID from the URL
   const [customer, setCustomer] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchCustomerDetails = async () => {
-      if (!customerId) return;
       setLoading(true);
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_BACKEND_URL}/customers/${customerId}`
+          `${process.env.REACT_APP_BACKEND_URL}/customers/${customer_id}`
         );
         setCustomer(response.data);
       } catch (err) {
@@ -25,9 +26,9 @@ const CustomerDetails = ({ customerId }) => {
     };
 
     fetchCustomerDetails();
-  }, [customerId]);
+  }, [customer_id]);
 
-  if (!customerId) {
+  if (!customer_id) {
     return (
       <p className="text-gray-500 italic text-center mt-4">
         Select a customer to view details.
@@ -56,7 +57,10 @@ const CustomerDetails = ({ customerId }) => {
   }
 
   return (
-    <div className="customer-details p-4 bg-white shadow rounded">
+    <div
+      className="customer-details max-w-3xl mx-auto p-6 bg-white shadow rounded-lg"
+      style={{ marginTop: "13vh" }}
+    >
       <h2 className="details-title text-lg font-bold text-blue-600 mb-4">
         Customer Details
       </h2>
@@ -90,6 +94,7 @@ const CustomerDetails = ({ customerId }) => {
       </ul>
     </div>
   );
+
 };
 
 export default CustomerDetails;

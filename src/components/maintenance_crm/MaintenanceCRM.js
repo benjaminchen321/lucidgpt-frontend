@@ -77,6 +77,10 @@ const MaintenanceCRM = () => {
   return (
     <div className="container mx-auto mt-6 p-6 bg-white shadow-lg rounded-lg" style={{marginTop: "13vh"}}>
       <h1 className="text-2xl font-bold text-blue-600 mb-4">Customer CRM</h1>
+      <p className="text-sm text-gray-600 mb-4">
+        Browse the list of customers to view their contact details and navigate to their
+        full profile for additional insights, including appointments and vehicle information.
+      </p>
       {error && (
         <div className="p-4 bg-red-100 text-red-700 rounded mb-4">
           <p>{error}</p>
@@ -94,7 +98,7 @@ const MaintenanceCRM = () => {
           <div
             key={customer.id}
             className="p-4 bg-gray-50 shadow-md rounded-lg hover:shadow-lg transition-all duration-200 cursor-pointer"
-            onClick={() => navigate(`/dashboard/${customer.id}`)}
+            onClick={() => navigate(`/customers/${customer.id}`)}
           >
             <h2 className="text-lg font-semibold text-gray-800">{customer.name}</h2>
             <p className="text-sm text-gray-500">{customer.email}</p>
