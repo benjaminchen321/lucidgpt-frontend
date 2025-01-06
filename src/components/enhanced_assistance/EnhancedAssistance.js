@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "../../utils/axiosConfig";
-import LoadingSpinner from "../common/LoadingSpinner"; // Import LoadingSpinner
+import ReactMarkdown from "react-markdown"; // Import ReactMarkdown for Markdown rendering
+import LoadingSpinner from "../common/LoadingSpinner";
 import "./EnhancedAssistance.css";
 
 const EnhancedAssistance = () => {
@@ -51,18 +52,10 @@ const EnhancedAssistance = () => {
         Motors. Examples of queries:
       </p>
       <ul className="instruction-list list-disc list-inside text-gray-800 mb-6">
-        <li className="instruction-item mb-2">
-          What are the features of the latest Lucid vehicle models?
-        </li>
-        <li className="instruction-item mb-2">
-          How does Lucid compare with other electric car manufacturers?
-        </li>
-        <li className="instruction-item mb-2">
-          What are the benefits of Lucid's battery technology?
-        </li>
-        <li className="instruction-item mb-2">
-          Where can I find a Lucid service center near me?
-        </li>
+        <li className="mb-2">What are the features of the latest Lucid vehicle models?</li>
+        <li className="mb-2">How does Lucid compare with other electric car manufacturers?</li>
+        <li className="mb-2">What are the benefits of Lucid's battery technology?</li>
+        <li className="mb-2">Where can I find a Lucid service center near me?</li>
       </ul>
       <div className="conversation space-y-4 mb-6">
         {conversation.map((entry, index) => (
@@ -74,16 +67,17 @@ const EnhancedAssistance = () => {
               <strong className="text-blue-600">You:</strong> {entry.query}
             </div>
             <div className="ai-response">
-              <strong className="text-blue-600">LucidGPT:</strong>{" "}
-              {entry.answer}
+              <strong className="text-blue-600">LucidGPT:</strong>
+              <ReactMarkdown className="markdown mt-2 text-gray-800">
+                {entry.answer}
+              </ReactMarkdown>
             </div>
           </div>
         ))}
         {loading && (
           <div className="conversation-entry p-4 bg-gray-50 shadow rounded-lg">
             <div className="ai-response">
-              <strong className="text-blue-600">LucidGPT:</strong>{" "}
-              <LoadingSpinner />
+              <strong className="text-blue-600">LucidGPT:</strong> <LoadingSpinner />
             </div>
           </div>
         )}
