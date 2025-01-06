@@ -4,7 +4,7 @@ import axios from 'axios';
 
 // Create an Axios instance
 const axiosInstance = axios.create({
-  baseURL: 'https://localhost:8000', // Ensure this matches your backend
+  baseURL: process.env.REACT_APP_BACKEND_URL, // Ensure this matches your backend
   timeout: 5000,
   headers: {
     'Content-Type': 'application/x-www-form-urlencoded',
