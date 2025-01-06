@@ -1,78 +1,105 @@
 // frontend/src/context/AuthContext.js
 
 import React, { createContext, useState, useEffect } from 'react';
-import axios from '../utils/axiosConfig'; // Ensure axios is configured with baseURL and interceptors
+import axios from '../utils/axiosConfig'; // Ensure this path is correct
+import { useNavigate } from 'react-router-dom';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+  const navigate = useNavigate();
   const [auth, setAuth] = useState({
     isAuthenticated: false,
     user: null,
+    role: null,
     loading: true,
   });
 
   useEffect(() => {
     const token = localStorage.getItem('access_token');
-    console.log('AuthContext - Retrieved token:', token); // Debugging line
-    if (token && token !== "null") { // Ensure token is valid
+    if (token && token !== "null") {
       axios.get('/users/me')
         .then(response => {
-          console.log('AuthContext - User data:', response.data); // Debugging line
+          console.log('User data fetched:', response.data);
           setAuth({
             isAuthenticated: true,
             user: response.data,
+            role: response.data.role,
             loading: false,
           });
+          // Redirect based on role
+          if (response.data.role === 'superuser' || response.data.role === 'employee') {
+            console.log('Redirecting to /dashboard');
+            navigate('/dashboard');
+          } else if (response.data.role === 'customer') {
+            console.log('Redirecting to /assist');
+            navigate('/assist');
+          }
         })
         .catch(() => {
-          console.log('AuthContext - Invalid token, logging out'); // Debugging line
+          console.log('Failed to fetch user data, redirecting to /login');
           setAuth({
             isAuthenticated: false,
             user: null,
+            role: null,
             loading: false,
           });
+          navigate('/login');
         });
     } else {
+      console.log('No token found, redirecting to /login');
       setAuth({
         isAuthenticated: false,
         user: null,
+        role: null,
         loading: false,
       });
+      navigate('/login');
     }
-  }, []);
+  }, [navigate]);  
 
   const login = (token) => {
-    console.log('AuthContext - Logging in with token:', token); // Debugging line
+    console.log('Logging in with token:', token);
     localStorage.setItem('access_token', token);
-    axios.get('/users/me') // Fetch user info after login
+    axios.get('/users/me')
       .then(response => {
-        console.log('AuthContext - Logged in user data:', response.data); // Debugging line
+        console.log('User data fetched after login:', response.data);
         setAuth({
           isAuthenticated: true,
           user: response.data,
+          role: response.data.role,
           loading: false,
         });
+        // Redirect based on role
+        if (response.data.role === 'superuser' || response.data.role === 'employee') {
+          console.log('Redirecting to /dashboard');
+          navigate('/dashboard');
+        } else if (response.data.role === 'customer') {
+          console.log('Redirecting to /assist');
+          navigate('/assist');
+        }
       })
       .catch(() => {
-        console.log('AuthContext - Failed to fetch user data after login'); // Debugging line
+        console.log('Failed to fetch user data after login, redirecting to /login');
         setAuth({
           isAuthenticated: false,
           user: null,
+          role: null,
           loading: false,
         });
+        navigate('/login');
       });
-  };
+  };  
 
   const logout = () => {
-    console.log('AuthContext - Logging out'); // Debugging line
     localStorage.removeItem('access_token');
     setAuth({
       isAuthenticated: false,
       user: null,
+      role: null,
       loading: false,
     });
-    window.location.href = "/login"; // Redirect to login after logout
+    navigate('/login');
   };
 
   return (

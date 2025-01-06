@@ -1,19 +1,22 @@
 // frontend/src/utils/axiosConfig.js
 
-import axios from "axios";
+import axios from 'axios';
 
-const instance = axios.create({
-  baseURL: process.env.REACT_APP_BACKEND_URL || "https://localhost:8000",
-  withCredentials: true, // If your backend requires credentials like cookies
+// Create an Axios instance
+const axiosInstance = axios.create({
+  baseURL: 'https://localhost:8000', // Ensure this matches your backend
+  timeout: 5000,
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded',
+  },
 });
 
-// Add a request interceptor to attach the token
-instance.interceptors.request.use(
+// Request interceptor to add the Authorization header
+axiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("access_token");
-    console.log('Axios Interceptor - Retrieved token:', token); // Debugging line
-    if (token && token !== "null") { // Check if token is valid
-      config.headers["Authorization"] = `Bearer ${token}`;
+    const token = localStorage.getItem('access_token');
+    if (token && token !== "null") {
+      config.headers['Authorization'] = `Bearer ${token}`;
     }
     return config;
   },
@@ -22,18 +25,13 @@ instance.interceptors.request.use(
   }
 );
 
-// Add a response interceptor for global error handling
-instance.interceptors.response.use(
+// Response interceptor to handle errors globally
+axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
-    // Handle unauthorized errors globally
-    if (error.response && error.response.status === 401) {
-      console.log('Axios Interceptor - Unauthorized, logging out'); // Debugging line
-      localStorage.removeItem("access_token");
-      window.location.href = "/login";
-    }
+    // Optionally handle specific error cases
     return Promise.reject(error);
   }
 );
 
-export default instance;
+export default axiosInstance;

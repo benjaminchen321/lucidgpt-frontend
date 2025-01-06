@@ -1,24 +1,17 @@
 // frontend/src/components/Logout.js
 
-import React, { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { AuthContext } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
-import './Logout.css'; // Create and style if necessary
 
 const Logout = () => {
   const { logout } = useContext(AuthContext);
-  const navigate = useNavigate();
 
-  const handleLogout = () => {
+  useEffect(() => {
     logout();
-    // navigate('/login'); // Already handled in AuthContext's logout function
-  };
+    // The logout function handles redirection
+  }, [logout]);
 
-  return (
-    <button onClick={handleLogout} className="logout-button">
-      Logout
-    </button>
-  );
+  return null; // Since redirection is handled in useEffect
 };
 
 export default Logout;

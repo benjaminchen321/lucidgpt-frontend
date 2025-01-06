@@ -7,7 +7,7 @@ import "./EnhancedAssistance.css";
 
 const EnhancedAssistance = () => {
   const [query, setQuery] = useState("");
-  const [answer, setAnswer] = useState("");
+  const [conversation, setConversation] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -19,11 +19,18 @@ const EnhancedAssistance = () => {
     }
     setLoading(true);
     setError("");
-    setAnswer("");
 
     try {
       const response = await axios.post("/assist", { query });
-      setAnswer(response.data.answer);
+      if (response.data && response.data.answer) {
+        setConversation(prev => [
+          ...prev,
+          { query, answer: response.data.answer }
+        ]);
+        setQuery("");
+      } else {
+        setError("No answer received from the server.");
+      }
     } catch (err) {
       if (err.response && err.response.data.detail) {
         setError(err.response.data.detail);
@@ -38,25 +45,38 @@ const EnhancedAssistance = () => {
   return (
     <div className="enhanced-assistance">
       <h2>LucidGPT Enhanced Assistance</h2>
-      <form onSubmit={handleAssist}>
+      <div className="conversation">
+        {conversation.map((entry, index) => (
+          <div key={index} className="conversation-entry">
+            <div className="user-query">
+              <strong>You:</strong> {entry.query}
+            </div>
+            <div className="ai-response">
+              <strong>LucidGPT:</strong> {entry.answer}
+            </div>
+          </div>
+        ))}
+        {loading && (
+          <div className="conversation-entry">
+            <div className="ai-response">
+              <strong>LucidGPT:</strong> <LoadingSpinner />
+            </div>
+          </div>
+        )}
+      </div>
+      <form onSubmit={handleAssist} className="assist-form">
         <textarea
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Ask your question related to Lucid Motor..."
           required
-          rows="4"
+          rows="3"
         ></textarea>
-        <button type="submit" disabled={loading}>
-          {loading ? <LoadingSpinner /> : "Get Assistance"}
+        <button type="submit" className="assist-button" disabled={loading}>
+          {loading ? <LoadingSpinner /> : "Send"}
         </button>
       </form>
       {error && <div className="error-message">{error}</div>}
-      {answer && (
-        <div className="assist-answer">
-          <h3>Answer:</h3>
-          <p>{answer}</p>
-        </div>
-      )}
     </div>
   );
 };

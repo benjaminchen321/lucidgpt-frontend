@@ -1,74 +1,80 @@
 /* frontend/src/components/Navbar.css */
 
 .navbar {
+  background-color: #007bff;
+  padding: 10px 0;
+}
+
+.navbar-container {
+  width: 100%; /* Full width */
+  max-width: 1200px; /* Optional: Set a max width */
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px; /* Optional: Horizontal padding */
+}
+
+.navbar-brand {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.navbar-links,
+.navbar-actions {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+}
+
+.navbar-links li a,
+.navbar-actions li a,
+.navbar-actions li button {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1em;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.navbar-links li a:hover,
+.navbar-actions li a:hover,
+.navbar-actions li button:hover {
+  text-decoration: underline;
+}
+
+.logout-button {
+  color: #fff;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .navbar-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar-links,
+  .navbar-actions {
+    flex-direction: column;
+    align-items: flex-start;
     width: 100%;
-    background-color: #007bff; /* Lucid's primary color */
-    padding: 10px 20px;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
   }
-  
-  .navbar-logo a {
-    color: #fff;
-    font-size: 1.5em;
-    font-weight: bold;
-    text-decoration: none;
+
+  .navbar-links li,
+  .navbar-actions li {
+    width: 100%;
   }
-  
-  .navbar-links {
-    list-style: none;
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    margin: 0;
-    padding: 0;
+
+  .navbar-links li a,
+  .navbar-actions li a,
+  .navbar-actions li button {
+    width: 100%;
+    padding: 10px 0;
   }
-  
-  .navbar-links li a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 1em;
-    transition: color 0.3s ease;
-  }
-  
-  .navbar-links li a:hover {
-    color: #dcdcdc;
-  }
-  
-  .navbar-links li .logout-button {
-    background-color: transparent;
-    border: none;
-    color: #fff;
-    cursor: pointer;
-    font-size: 1em;
-    padding: 0;
-    transition: color 0.3s ease;
-  }
-  
-  .navbar-links li .logout-button:hover {
-    color: #dcdcdc;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .navbar-links {
-      flex-direction: column;
-      gap: 10px;
-      background-color: #007bff;
-      position: absolute;
-      top: 60px;
-      right: 20px;
-      padding: 10px;
-      border-radius: 8px;
-      display: none; /* Implement a toggle for mobile view */
-    }
-    
-    .navbar {
-      position: relative;
-    }
-    
-    /* Implement hamburger menu if needed */
-  }
-  
+}

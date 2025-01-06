@@ -3,14 +3,11 @@
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import axios from '../utils/axiosConfig';
-import { useNavigate } from 'react-router-dom';
 import './Login.css'; // Import the updated CSS
 import LoadingSpinner from './common/LoadingSpinner'; // Import LoadingSpinner
 
 const Login = () => {
   const { login } = useContext(AuthContext);
-  const navigate = useNavigate();
-
   const [form, setForm] = useState({
     email: '',
     password: '',
@@ -44,8 +41,8 @@ const Login = () => {
       console.log('Token Response:', response.data); // Debugging line
 
       if (response.data.access_token) {
-        login(response.data.access_token);
-        navigate('/dashboard');
+        login(response.data.access_token); // Update AuthContext
+        // Navigation handled inside AuthContext's login function
       } else {
         setError('Invalid response from server. Please try again.');
       }

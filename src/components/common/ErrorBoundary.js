@@ -1,5 +1,6 @@
 // frontend/src/components/common/ErrorBoundary.js
-import React from "react";
+
+import React from 'react';
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -8,18 +9,16 @@ class ErrorBoundary extends React.Component {
   }
 
   static getDerivedStateFromError(error) {
-    // Update state to display fallback UI on next render
     return { hasError: true };
   }
 
   componentDidCatch(error, errorInfo) {
     // You can log the error to an error reporting service here
-    console.error("ErrorBoundary caught an error", error, errorInfo);
+    console.error("Uncaught error:", error, errorInfo);
   }
 
   render() {
     if (this.state.hasError) {
-      // Fallback UI
       return <h1>Something went wrong.</h1>;
     }
 
