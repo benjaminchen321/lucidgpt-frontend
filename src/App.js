@@ -1,15 +1,19 @@
 // src/App.js
-import React from "react";
+
+import React, { useContext } from "react";
 import { BrowserRouter as Router, Routes, Route, Link, Navigate } from "react-router-dom";
+import { AuthProvider, AuthContext } from "./context/AuthContext"; // Import AuthContext
+import PrivateRoute from "./components/common/PrivateRoute"; // Import PrivateRoute
 import EnhancedAssistance from "./components/enhanced_assistance/EnhancedAssistance";
 import Dashboard from "./components/dashboard/Dashboard";
 import ErrorBoundary from "./components/common/ErrorBoundary";
 import Login from "./components/Login"; // Import Login component
 import DarkModeToggle from "./components/DarkModeToggle"; // Import DarkModeToggle
+import Logout from "./components/Logout"; // Import Logout component
 import "./App.css";
 
-const App = () => {
-  const isAuthenticated = !!localStorage.getItem("token");
+const AppContent = () => {
+  const { auth } = useContext(AuthContext); // Access auth state
 
   return (
     <Router>
@@ -40,13 +44,23 @@ const App = () => {
             <li>
               <Link to="/enhanced-assistance">Enhanced Assistance</Link>
             </li>
-            <li>
-              {isAuthenticated ? (
-                <Link to="/dashboard">Customer Dashboard</Link>
-              ) : (
+            {auth.isAuthenticated ? (
+              <>
+                <li>
+                  <Link to="/dashboard">Customer Dashboard</Link>
+                </li>
+                <li>
+                  <Link to="/assist">Assistance</Link>
+                </li>
+                <li>
+                  <Logout />
+                </li>
+              </>
+            ) : (
+              <li>
                 <Link to="/login">Login</Link>
-              )}
-            </li>
+              </li>
+            )}
           </ul>
         </nav>
         <DarkModeToggle /> {/* Add Dark Mode Toggle */}
@@ -56,20 +70,35 @@ const App = () => {
           <Routes>
             <Route
               path="/enhanced-assistance"
-              element={<EnhancedAssistance />}
+              element={
+                <PrivateRoute>
+                  <EnhancedAssistance />
+                </PrivateRoute>
+              }
             />
             <Route
               path="/dashboard"
               element={
-                isAuthenticated ? <Dashboard /> : <Navigate to="/login" />
+                <PrivateRoute>
+                  <Dashboard />
+                </PrivateRoute>
               }
             />
             <Route path="/login" element={<Login />} />
+            {/* Add other routes as needed */}
+            {/* Redirect unknown routes to a default page */}
+            <Route path="*" element={<Navigate to="/enhanced-assistance" replace />} />
           </Routes>
         </ErrorBoundary>
       </main>
     </Router>
   );
 };
+
+const App = () => (
+  <AuthProvider>
+    <AppContent />
+  </AuthProvider>
+);
 
 export default App;

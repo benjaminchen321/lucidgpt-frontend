@@ -1,58 +1,76 @@
-// frontend/src/components/Login.js
-import React, { useState } from "react";
-import axios from "axios";
+// src/components/Login.js
+
+import React, { useState, useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
+import axios from '../utils/axiosConfig';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const [form, setForm] = useState({
+    email: '',
+    password: '',
+  });
+  const [error, setError] = useState('');
+
+  const handleChange = (e) => {
+    setForm((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setError('');
     try {
-      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/token`, {
-        username: email,
-        password: password,
+      const params = new URLSearchParams();
+      params.append('username', form.email);
+      params.append('password', form.password);
+      // 'grant_type' defaults to 'password', no need to set it explicitly
+
+      const response = await axios.post('/token', params, {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
       });
-      localStorage.setItem("token", response.data.access_token);
-      // Redirect to dashboard or home
-      window.location.href = "/dashboard";
+      login(response.data.access_token);
+      navigate('/dashboard');
     } catch (err) {
-      console.error("Login error:", err);
-      setError("Invalid email or password.");
-    } finally {
-      setLoading(false);
+      if (err.response && err.response.data.detail) {
+        setError(err.response.data.detail);
+      } else {
+        setError('An error occurred during login.');
+      }
     }
   };
 
   return (
     <div className="login-container">
       <h2>Login</h2>
-      <form onSubmit={handleLogin}>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        {error && <p className="error">{error}</p>}
-        <button type="submit" disabled={loading}>
-          {loading ? "Logging in..." : "Login"}
-        </button>
+      {error && <div className="error-message">{error}</div>}
+      <form onSubmit={handleSubmit}>
+        <label>Email:</label>
+        <input
+          type="email"
+          name="email"
+          value={form.email}
+          onChange={handleChange}
+          required
+        />
+        
+        <label>Password:</label>
+        <input
+          type="password"
+          name="password"
+          value={form.password}
+          onChange={handleChange}
+          required
+        />
+        
+        <button type="submit">Login</button>
       </form>
     </div>
   );
