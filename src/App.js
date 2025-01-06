@@ -23,7 +23,7 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/crm" element={<MaintenanceCRM />} />
               <Route path="/assist" element={<EnhancedAssistance />} />
-              <Route path="/" element={<Navigate to="/dashboard" />} /> 
+              <Route path="/" element={<Navigate to="/assist" />} /> 
             </Routes>
           </Suspense>
         </ErrorBoundary>
