@@ -44,10 +44,10 @@ const EnhancedAssistance = () => {
   return (
     <div className="enhanced-assistance max-w-4xl mx-auto bg-white p-6 shadow-lg rounded-lg" style={{marginTop: "13vh"}}>
       <h2 className="text-2xl font-semibold text-blue-600 mb-4">
-        LucidGPT Enhanced Assistance
+        LucidGPT
       </h2>
       <p className="mb-4 text-gray-600">
-        Welcome to LucidGPT Enhanced Assistance! You can ask questions about
+        Hi, I'm LucidGPT! You can ask questions about
         your vehicle, maintenance schedules, or other queries related to Lucid
         Motors. Examples of queries:
       </p>

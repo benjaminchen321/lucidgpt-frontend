@@ -5,12 +5,13 @@ const Navbar = () => {
   return (
     <nav
       className="bg-blue-600 text-white p-4 fixed w-full z-20 top-0 left-0"
-      style={{ boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", paddingBottom: "3vh" }}
+      style={{
+        boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+        paddingBottom: "3vh",
+      }}
     >
       <div className="max-w-3xl mx-auto flex justify-between items-center">
-        <Link to="/" className="text-2xl font-bold">
-          LucidGPT
-        </Link>
+        <div className="text-2xl font-bold"></div>
         <ul className="hidden md:flex space-x-4">
           <li>
             <Link to="/dashboard" className="hover:text-gray-200">
@@ -19,18 +20,21 @@ const Navbar = () => {
           </li>
           <li>
             <Link to="/crm" className="hover:text-gray-200">
-              Maintenance CRM
+              Maintenance Hub
             </Link>
           </li>
           <li>
             <Link to="/assist" className="hover:text-gray-200">
-              Enhanced Assistance
+              LucidGPT
             </Link>
           </li>
         </ul>
         {/* Mobile Menu Button */}
         <div className="md:hidden">
-          <button className="text-white focus:outline-none" aria-label="Open menu">
+          <button
+            className="text-white focus:outline-none"
+            aria-label="Open menu"
+          >
             <svg
               className="w-6 h-6"
               fill="none"
