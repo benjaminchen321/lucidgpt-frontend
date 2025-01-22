@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import axios from "../../utils/axiosConfig";
+// We keep your axios config import if used elsewhere, 
+// but we'll use fetch here to handle streaming.
 import ReactMarkdown from "react-markdown";
 import LoadingSpinner from "../common/LoadingSpinner";
 
@@ -9,28 +10,71 @@ const EnhancedAssistance = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const REACT_APP_BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
   const handleAssist = async (e) => {
     e.preventDefault();
     if (!query.trim()) {
       setError("Please enter a valid query.");
       return;
     }
+
     setLoading(true);
     setError("");
 
+    // **(NEW)** Temporarily add a blank answer to show loading/streaming
+    setConversation((prev) => [
+      ...prev,
+      { query, answer: "" },
+    ]);
+
     try {
-      const response = await axios.post("/assist", { query: query.trim() });
-      if (response.data && response.data.answer) {
-        setConversation((prev) => [
-          ...prev,
-          { query, answer: response.data.answer },
-        ]);
-        setQuery("");
+      // **(NEW)** Use fetch to stream text instead of axios.post
+      const response = await fetch(`${REACT_APP_BACKEND_URL}/assist`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ query: query.trim() }),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        setError(errorText || "No answer received from the server.");
       } else {
-        setError("No answer received from the server.");
+        // **(NEW)** Read the response body as a stream
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder("utf-8");
+        let done = false;
+        let accumulatedText = "";
+
+        while (!done) {
+          const { value, done: isDone } = await reader.read();
+          done = isDone;
+          if (value) {
+            // Decode the current chunk
+            const chunk = decoder.decode(value);
+            accumulatedText += chunk;
+
+            // Update the last answer in conversation on the fly
+            // eslint-disable-next-line no-loop-func
+            setConversation((prev) => {
+              const updated = [...prev];
+              const lastIndex = updated.length - 1;
+              // Overwrite the blank or partial answer with the new chunk
+              updated[lastIndex] = {
+                ...updated[lastIndex],
+                answer: accumulatedText,
+              };
+              return updated;
+            });
+          }
+        }
       }
+
+      setQuery("");
     } catch (err) {
-      if (err.response && err.response.data.detail) {
+      if (err.response && err.response.data && err.response.data.detail) {
         setError(err.response.data.detail);
       } else {
         setError("An error occurred while fetching assistance.");
@@ -65,10 +109,12 @@ const EnhancedAssistance = () => {
             </div>
           </div>
         ))}
+
         {loading && (
           <div className="p-4 bg-gray-50 shadow rounded-lg">
             <div>
-              <strong className="text-[#a47b5b]">LucidGPT:</strong> <LoadingSpinner />
+              <strong className="text-[#a47b5b]">LucidGPT:</strong> 
+              <LoadingSpinner />
             </div>
           </div>
         )}
